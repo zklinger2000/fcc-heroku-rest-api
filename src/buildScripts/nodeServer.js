@@ -2,8 +2,8 @@
 /* eslint-disable no-console */
 /* eslint-disable import/default */
 var chalk = require('chalk');
-var app = require('../app'); // This initializes the Express application
-var config = require('../../config');
+var app = require('../app.js'); // This initializes the Express application
+var config = require('../../config.js');
 
 var port = config.port || 5000;
 var server = app.listen(port, err => {

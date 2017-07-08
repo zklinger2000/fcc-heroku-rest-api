@@ -4,7 +4,7 @@
   "description": "Express REST API for deploying an app to Heroku with Facebook Auth",
   "main": "app.js",
   "scripts": {
-    "start": "NODE_ENV=production node src/buildScripts/nodeServer.js",
+    "start": "node src/buildScripts/nodeServer.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

@@ -30,3 +30,5 @@ app.get("/webhook", function (req, res) {
     res.sendStatus(403);
   }
 });
+
+module.exports = app;

@@ -8,7 +8,7 @@
     "prestart": "node ./src/buildScripts/startMessage.js",
     "start": "node ./dist/buildScripts/nodeServer.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel src -d dist"
+    "build": "./node_modules/.bin/babel src -d dist"
   },
   "repository": {
     "type": "git",

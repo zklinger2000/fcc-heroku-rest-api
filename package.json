@@ -7,7 +7,7 @@
     "prestart": "node ./src/buildScripts/startMessage.js",
     "start": "node ./dist/buildScripts/nodeServer.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "preinstall": "./node_modules/.bin/babel src -d dist"
+    "postinstall": "./node_modules/.bin/babel src -d dist"
   },
   "repository": {
     "type": "git",

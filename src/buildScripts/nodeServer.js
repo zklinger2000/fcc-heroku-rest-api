@@ -14,4 +14,4 @@ const server = app.listen(port, err => {
   }
 });
 
-module.exports = server;
+export default server;

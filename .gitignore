@@ -60,3 +60,6 @@ typings/
 # WebStorm
 .idea/
 
+# Babel /dist folder transpiled to ES5
+dist/
+

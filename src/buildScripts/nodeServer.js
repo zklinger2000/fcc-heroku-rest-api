@@ -1,8 +1,8 @@
 "use strict";
 /* eslint-disable no-console */
 /* eslint-disable import/default */
-const chalk = require('chalk');
-const app = require('../app.js'); // This initializes the Express application
+import chalk from 'chalk';
+import app from '../app.js'; // This initializes the Express application
 require('dotenv').config({ silent: true });
 
 const port = process.env.PORT || 5000;

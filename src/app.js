@@ -1,6 +1,6 @@
-const express = require('express');
-const morgan = require('morgan');
-const bodyParser = require('body-parser');
+import express from 'express';
+import morgan from 'morgan';
+import bodyParser from 'body-parser';
 
 // Express App setup
 const app = express();
@@ -31,4 +31,4 @@ app.get("/webhook", function (req, res) {
   }
 });
 
-module.exports = app;
+export default app;

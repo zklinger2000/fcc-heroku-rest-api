@@ -1,12 +1,12 @@
 "use strict";
 /* eslint-disable no-console */
 /* eslint-disable import/default */
-var chalk = require('chalk');
-var app = require('../app.js'); // This initializes the Express application
-var config = require('../../config.js');
+const chalk = require('chalk');
+const app = require('../app.js'); // This initializes the Express application
+require('dotenv').config({ silent: true });
 
-var port = config.port || 5000;
-var server = app.listen(port, err => {
+const port = process.env.PORT || 5000;
+const server = app.listen(port, err => {
   if (err) {
     console.log(chalk.red(err));
   } else {

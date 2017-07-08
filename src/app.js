@@ -1,6 +1,6 @@
-var express = require('express');
-var morgan = require('morgan');
-var bodyParser = require('body-parser');
+const express = require('express');
+const morgan = require('morgan');
+const bodyParser = require('body-parser');
 
 // Express App setup
 const app = express();

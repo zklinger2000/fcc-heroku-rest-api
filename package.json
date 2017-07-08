@@ -4,7 +4,7 @@
   "description": "Express REST API for deploying an app to Heroku with Facebook Auth",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "NODE_ENV=production node src/buildScripts/nodeServer.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -27,7 +27,11 @@
   "homepage": "https://github.com/zklinger2000/fcc-heroku-rest-api#readme",
   "dependencies": {
     "body-parser": "^1.17.2",
+    "chalk": "^2.0.1",
     "express": "^4.15.3",
     "morgan": "^1.8.2"
+  },
+  "devDependencies": {
+    "dotenv": "^4.0.0"
   }
 }

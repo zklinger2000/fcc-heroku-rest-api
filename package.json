@@ -9,8 +9,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "npm run babel:build",
     "dev": "NODE_ENV=development nodemon src/buildScripts/nodeServer.js --exec babel-node",
-    "dev:start": "npm-run-all --parallel prestart dev",
-    "babel:build": "./node_modules/.bin/babel src -d dist"
+    "dev:start": "npm-run-all --parallel prestart dev lint:watch",
+    "babel:build": "./node_modules/.bin/babel src -d dist",
+    "lint": "esw src/buildScripts src/database src/routes src/app.js --color",
+    "lint:watch": "npm run lint -- --watch"
   },
   "repository": {
     "type": "git",
@@ -37,10 +39,14 @@
     "body-parser": "1.17.2",
     "chalk": "2.0.1",
     "dotenv": "4.0.0",
+    "eslint": "3.15.0",
     "express": "4.15.3",
     "morgan": "1.8.2"
   },
   "devDependencies": {
+    "eslint": "3.15.0",
+    "eslint-plugin-import": "2.2.0",
+    "eslint-watch": "2.1.14",
     "nodemon": "1.11.0",
     "npm-run-all": "4.0.2"
   }

@@ -1,4 +1,7 @@
 "use strict";
+import facebook from './controllers/facebook';
+import passportService from './services/passport'; // eslint-disable-line no-unused-vars
+import passport from 'passport';
 
 const routes = (app) => {
   //================
@@ -15,18 +18,20 @@ const routes = (app) => {
     res.send('Deployed!');
   });
 
-  //===================
-  // Facebook Webhook
-  //===================
-  app.get('/webhook', function (req, res) {
-    if (req.query['hub.verify_token'] === process.env.VERIFICATION_TOKEN) {
-      console.log('Verified webhook');
-      res.status(200).send(req.query['hub.challenge']);
-    } else {
-      console.error('Verification failed. The tokens do not match.');
-      res.sendStatus(403);
-    }
-  });
+  //===========
+  // Facebook
+  //===========
+
+  app.get('/login/facebook',
+    passport.authenticate('facebook'));
+
+  app.get('/login/facebook/return',
+    passport.authenticate('facebook', { failureRedirect: 'http://localhost:8000/login' }),
+    facebook.loginCallback);
+
+  app.get('/me', facebook.me);
+
+  app.get('/webhook', facebook.webhook);
 };
 
 export default routes;

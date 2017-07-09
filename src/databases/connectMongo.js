@@ -10,7 +10,7 @@ const connectDB = () => {
 
   if (process.env.NODE_ENV !== 'test') {
     // Connect to MongoDB
-    mongoose.connect(process.env.MONGODB_URI, { promiseLibrary: bluebird });
+    mongoose.connect(process.env.MONGODB_URI, { promiseLibrary: bluebird, useMongoClient: true });
 
     //============================
     // CONNECTION EVENT LISTENERS

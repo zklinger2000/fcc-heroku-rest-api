@@ -5,6 +5,10 @@ import session from 'express-session';
 import cors from 'cors';
 import passport from 'passport';
 import routes from './routes';
+import connectMongo from './databases/connectMongo';
+
+// MongoDB Setup
+connectMongo();
 
 // Express App setup
 const app = express();

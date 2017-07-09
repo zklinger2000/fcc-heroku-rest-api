@@ -9,7 +9,7 @@ require('dotenv').config({ silent: true });
 const facebookStrategy = new Strategy({
     clientID: process.env.FB_CLIENT_ID,
     clientSecret: process.env.FB_CLIENT_SECRET,
-    callbackURL: `${process.env.WEB_APP_URL}/login/facebook/return`
+    callbackURL: `${process.env.API_URL}/login/facebook/return`
   },
   function(accessToken, refreshToken, profile, cb) {
     // In this example, the user's Facebook profile is supplied as the user

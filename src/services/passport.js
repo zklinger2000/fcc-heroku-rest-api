@@ -39,7 +39,8 @@ const facebookStrategy = new Strategy({
               displayName: profile.displayName
             }
           });
-          newUser.save()
+          return newUser
+            .save()
             .then((user) => {
               return cb(null, {
                 token: jwt.sign({

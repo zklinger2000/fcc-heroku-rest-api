@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
   facebook: {
     id: {
-      type: Number,
+      type: String,
       required: true
     },
     displayName: {

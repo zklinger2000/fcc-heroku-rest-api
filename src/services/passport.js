@@ -1,7 +1,7 @@
 import passport from 'passport';
 // const Strategy = require('passport-facebook').Strategy;
 import { Strategy } from 'passport-facebook';
-// import jwt from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 const User = require('../models/User');
 require('dotenv').config({ silent: true });
 
@@ -18,7 +18,6 @@ const facebookStrategy = new Strategy({
     // allows for account linking and authentication with other identity
     // providers.
     console.log(profile);
-    /*
     // See if a user with the given Google id exists
     User.findOne({ 'facebook.id': profile.id })
       .then(user => {
@@ -26,35 +25,33 @@ const facebookStrategy = new Strategy({
         if (user) {
           // Could update the user here if we wanted
           // user.save();
-          res.send({
-            token: jwt.sign({ _id: user._id }, 'sssshshshsh'),
-            user: {
-              displayName: user.displayName
-            }
+          return cb(null, {
+            token: jwt.sign({
+              _id: user._id,
+              displayName: user.facebook.displayName
+            }, process.env.JWT_SECRET)
           });
         } else {
           // Else, create new user and return token
-          const newUser = new User(profile);
+          const newUser = new User({
+            facebook: {
+              id: profile.id,
+              displayName: profile.displayName
+            }
+          });
           newUser.save()
-            .then(() => {
-              // res.send({
-              //   token: tokenForUser(newUser),
-              //   user: {
-              //     username: newUser.username,
-              //     email: newUser.email,
-              //     givenName: newUser.givenName,
-              //     surname: newUser.surname,
-              //     fullName: newUser.fullName,
-              //   }
-              // });
+            .then((user) => {
+              return cb(null, {
+                token: jwt.sign({
+                  _id: user._id,
+                  displayName: user.facebook.displayName
+                }, process.env.JWT_SECRET)
+              });
             })
             .catch(cb);
         }
       })
       .catch(cb);
-    */
-    profile._id = '12345028398908';
-    return cb(null, profile);
   });
 
 

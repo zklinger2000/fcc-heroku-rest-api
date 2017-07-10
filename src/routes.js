@@ -4,6 +4,11 @@ import passportService from './services/passport'; // eslint-disable-line no-unu
 import passport from 'passport';
 
 const routes = (app) => {
+  // Server index page
+  app.get('/', function (req, res) {
+    res.send('Deployed!');
+  });
+
   //================
   // Sample Routes
   //================
@@ -11,11 +16,6 @@ const routes = (app) => {
   // This is a GET route that is open to the world
   app.get('/noauth', function(req, res) {
     res.send({ message: 'no authorization required' });
-  });
-
-  // Server index page
-  app.get('/', function (req, res) {
-    res.send('Deployed!');
   });
 
   //===========
@@ -30,6 +30,10 @@ const routes = (app) => {
     facebook.loginCallback);
 
   app.get('/me', facebook.me);
+
+  app.get('/private', facebook.requireAuth, function(req, res) {
+    res.send({ message: 'Secret Code is 789' });
+  });
 
   app.get('/webhook', facebook.webhook);
 };

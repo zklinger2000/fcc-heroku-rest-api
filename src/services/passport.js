@@ -17,7 +17,7 @@ const facebookStrategy = new Strategy({
     // be associated with a user record in the application's database, which
     // allows for account linking and authentication with other identity
     // providers.
-    console.log(profile);
+    // console.log(profile);
     // See if a user with the given Google id exists
     User.findOne({ 'facebook.id': profile.id })
       .then(user => {

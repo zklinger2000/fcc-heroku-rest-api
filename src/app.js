@@ -34,8 +34,6 @@ app.use(passport.session());
 // CORS Middleware for handling requests coming from different IPs/ports
 app.use(cors());
 
-
-
 // Pass in our app to make it available to all routes
 routes(app);
 

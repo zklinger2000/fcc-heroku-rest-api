@@ -19,13 +19,13 @@ const facebookController = {
   },
 
   me: (req, res) => {
-    console.log('authorization:\n', req.get('authorization'));
     const token = req.get('authorization');
-    jwt.verify(req.get('authorization'), process.env.JWT_SECRET, (err, decoded) => {
-      if (err) return res.status(400).send(err);
-      console.log('decoded:\n', decoded);
-      // res.status(200).json({ displayName: decoded.displayName });
+
+    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+      if (err) return res.status(500).send(err);
+      // console.log('decoded:\n', decoded);
       User.findOne({ _id: decoded._id })
+        .lean()
         .then(user => {
           // If a user DOES exist, return token and whitelisted user info
           if (user) {
@@ -36,11 +36,30 @@ const facebookController = {
           }
         })
         .catch(err => {
-          console.log(err);
-          res.status(500).json({ error: err });
+          res.status(500).send(err);
         });
     });
+  },
 
+  requireAuth: (req, res, next) => {
+    const token = req.get('authorization');
+
+    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+      if (err) return res.status(500).send(err);
+      User.findOne({ _id: decoded._id })
+        .lean()
+        .then(user => {
+          if (user) {
+            req.user = user;
+            next();
+          } else {
+            res.status(401).send('No user found');
+          }
+        })
+        .catch(err => {
+          res.status(500).send(err);
+        });
+    });
   }
 };
 

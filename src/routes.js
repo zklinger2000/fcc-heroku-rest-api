@@ -23,13 +23,13 @@ const routes = (app) => {
   //===========
 
   app.get('/login/facebook',
-    passport.authenticate('facebook'));
+    passport.authenticate('facebook', { scope: ['user_friends'] }));
 
   app.get('/login/facebook/return',
-    passport.authenticate('facebook', { failureRedirect: 'http://localhost:8000/login' }),
+    passport.authenticate('facebook', { failureRedirect: `${process.env.WEB_APP_URL}/login` }),
     facebook.loginCallback);
 
-  app.get('/me', facebook.me);
+  app.get('/me', facebook.requireAuth, facebook.me);
 
   app.get('/private', facebook.requireAuth, function(req, res) {
     res.send({ message: 'Secret Code is 789' });

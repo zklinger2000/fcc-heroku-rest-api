@@ -9,7 +9,8 @@ require('dotenv').config({ silent: true });
 const facebookStrategy = new Strategy({
     clientID: process.env.FB_CLIENT_ID,
     clientSecret: process.env.FB_CLIENT_SECRET,
-    callbackURL: process.env.FB_LOGIN_CALLBACK
+    callbackURL: process.env.FB_LOGIN_CALLBACK,
+    profileFields: ['friends']
   },
   function(accessToken, refreshToken, profile, cb) {
     // In this example, the user's Facebook profile is supplied as the user
@@ -17,7 +18,7 @@ const facebookStrategy = new Strategy({
     // be associated with a user record in the application's database, which
     // allows for account linking and authentication with other identity
     // providers.
-    // console.log(profile);
+    console.log(profile._json);
     // See if a user with the given Google id exists
     User.findOne({ 'facebook.id': profile.id })
       .then(user => {
@@ -27,6 +28,7 @@ const facebookStrategy = new Strategy({
           // user.save();
           return cb(null, {
             token: jwt.sign({
+              exp: Math.floor(Date.now() / 1000) + (60 * 60),
               _id: user._id,
               displayName: user.facebook.displayName
             }, process.env.JWT_SECRET)
@@ -44,6 +46,7 @@ const facebookStrategy = new Strategy({
             .then((user) => {
               return cb(null, {
                 token: jwt.sign({
+                  exp: Math.floor(Date.now() / 1000) + (60 * 60),
                   _id: user._id,
                   displayName: user.facebook.displayName
                 }, process.env.JWT_SECRET)

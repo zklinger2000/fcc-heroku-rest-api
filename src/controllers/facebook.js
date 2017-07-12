@@ -12,24 +12,28 @@ const facebookController = {
     const token = req.get('authorization');
 
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-      if (err) return res.status(500).send(err);
-
-      User.findOne({ _id: decoded._id })
-        .lean()
-        .exec()
-        .then(user => {
-          if (user) {
-            req.user = user;
-            req.token = token;
-            next();
-            return null;
-          } else {
-            res.status(401).send('No user found');
-          }
-        })
-        .catch(err => {
-          res.status(500).send(err);
-        });
+      if (err && err.name === 'TokenExpiredError') {
+        res.status(401).send('Expired session');
+      } else if (err) {
+        res.status(500).send(err);
+      } else {
+        User.findOne({ _id: decoded._id })
+          .lean()
+          .exec()
+          .then(user => {
+            if (user) {
+              req.user = user;
+              req.token = token;
+              next();
+              return null;
+            } else {
+              res.status(401).send('No user found');
+            }
+          })
+          .catch(err => {
+            res.status(500).send(err);
+          });
+      }
     });
   },
 
